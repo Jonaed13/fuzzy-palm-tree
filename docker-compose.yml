@@ -1,8 +1,19 @@
-my-gotty:
-  hostname: mygotty
-  ports:
-  - 8989:8080
-  tty: true
-  image: modenaf360/gotty:latest
-  stdin_open: true
-  tty: true                     #using bash TTY mode (pseudo-TTY)
+services:
+  my-gotty:
+    hostname: mygotty
+    image: modenaf360/gotty:latest
+
+    ports:
+      - "8989:8080"
+
+    stdin_open: true
+    tty: true
+
+    cap_add:
+      - NET_ADMIN
+
+    devices:
+      - /dev/net/tun:/dev/net/tun
+
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
