@@ -11,11 +11,18 @@ RUN apt-get update && \
     python3-minimal python3-pip python3-venv build-essential \
     fzf ripgrep bat tree net-tools dnsutils gnupg \
     iptables iproute2 iputils-ping dbus kmod && \
+    # Install Node.js v20
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y --no-install-recommends nodejs && \
+    # Install Cloudflare WARP natively
+    curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ bookworm main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
+    apt-get update && apt-get install -y --no-install-recommends cloudflare-warp && \
+    # Install GoTTY
     curl -sLk https://github.com/sorenisanerd/gotty/releases/download/${GOTTY_TAG_VER}/gotty_${GOTTY_TAG_VER}_linux_amd64.tar.gz \
     | tar xzC /usr/local/bin && \
     mkdir -p ~/.local/bin && ln -s /usr/bin/batcat ~/.local/bin/bat && \
+    # Aggressive cleanup
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
