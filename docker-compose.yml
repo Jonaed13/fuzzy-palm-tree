@@ -1,11 +1,8 @@
-version: "3.9"
 services:
   my-gotty:
-    build: .
+    image: ubuntu:22.04
     hostname: mygotty
     ports:
       - "8989:8080"
     stdin_open: true
     tty: true
-    volumes:
-      - ./workspace:/workspace
