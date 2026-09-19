@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 LABEL maintainer="wingnut0310 <wingnut0310@gmail.com>"
 
 ENV LANG en_US.UTF-8
